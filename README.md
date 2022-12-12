@@ -32,7 +32,7 @@ pip install openai
 ```
 
 3. 编辑配置文件
-  - 项目中有一个 `config.ini.example` 配置文件，改名或复制为 `config.ini`
+    - 项目中有一个 `config.ini.example` 配置文件，改名或复制为 `config.ini`
   - Microsoft TTS 地区和key怎么填? 需要你在Azure下建立语音服务资源，然后获取地区和key [详细看这里](https://learn.microsoft.com/en-us/azure/cognitive-services/speech-service/get-started-speech-to-text?tabs=windows%2Cterminal&pivots=programming-language-python#prerequisites)
   - 语音输入输出 [支持的语言列表](https://learn.microsoft.com/en-us/azure/cognitive-services/speech-service/language-support?tabs=stt-tts#supported-languages)
   - OpenAI key怎么填？ 需要你在OpenAI账号下创建APIkey [详细看这里](https://beta.openai.com/docs/quickstart/add-your-api-key)
