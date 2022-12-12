@@ -1,6 +1,7 @@
 import config
 from abc import abstractmethod, ABCMeta
 import logging
+import xml.dom.minidom
 import azure.cognitiveservices.speech as speechsdk
 
 
@@ -24,18 +25,10 @@ class AzureSpeech(Speech):
     speech_config.speech_recognition_language = config.conf[
         'SPEECH_RECOGNITION_LANGUAGE']
 
-    speech_config.speech_synthesis_voice_name = config.conf[
-        'SPEECH_SYNTHESIS_VOICE_NAME']
-
     audio_input_config = speechsdk.audio.AudioConfig(
         use_default_microphone=True)
     speech_recognizer = speechsdk.SpeechRecognizer(
         speech_config=speech_config, audio_config=audio_input_config)
-
-    audio_output_config = speechsdk.audio.AudioOutputConfig(
-        use_default_speaker=True)
-    speech_synthesizer = speechsdk.SpeechSynthesizer(
-        speech_config=speech_config, audio_config=audio_output_config)
 
     def speechToText(self) -> str:
 
@@ -65,9 +58,15 @@ class AzureSpeech(Speech):
 
         return ''
 
+    audio_output_config = speechsdk.audio.AudioOutputConfig(
+        use_default_speaker=True)
+    speech_synthesizer = speechsdk.SpeechSynthesizer(
+        speech_config=speech_config, audio_config=audio_output_config)
+
     def textToSpeech(self, text: str):
-        speech_synthesis_result = self.speech_synthesizer.speak_text_async(
-            text).get()
+
+        speech_synthesis_result = self.speech_synthesizer.speak_ssml_async(
+            self.textToSSML(text)).get()
 
         if speech_synthesis_result.reason == speechsdk.ResultReason.SynthesizingAudioCompleted:
             logging.info("Speech synthesized finish")
@@ -84,3 +83,11 @@ class AzureSpeech(Speech):
                     logging.info(
                         "Did you set the speech resource key and region values?"
                     )
+
+    ssml_template = xml.dom.minidom.parse('ssml.xml').documentElement
+
+    def textToSSML(self, text: str) -> str:
+        voice = self.ssml_template.getElementsByTagName('voice')[0]
+        mstts = voice.getElementsByTagName('mstts:express-as')[0]
+        mstts.childNodes[0].data = text
+        return str(self.ssml_template.toxml('utf-8'), 'utf-8')

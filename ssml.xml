@@ -1,0 +1,8 @@
+<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis"
+       xmlns:mstts="https://www.w3.org/2001/mstts" xml:lang="zh-CN">
+    <voice name="zh-CN-XiaochenNeural">
+        <mstts:express-as style="affectionate" styledegree="2">
+            This is Template!
+        </mstts:express-as>
+    </voice>
+</speak>
