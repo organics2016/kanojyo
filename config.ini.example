@@ -1,0 +1,14 @@
+[dev]
+# Microsoft TTS 服务地区
+SPEECH_REGION=eastasia
+# Microsoft TTS api key
+SPEECH_KEY=xxxxxxxxxxxxx....
+# 语音输入语言
+SPEECH_RECOGNITION_LANGUAGE=zh-CN
+# 语音输出语言
+SPEECH_SYNTHESIS_VOICE_NAME=zh-CN-XiaochenNeural
+
+# OpenAI api key
+OPENAI_API_KEY=sk-xxxxxxxxxxxxx....
+# 用户ID 随便填，不和别人重复就行，自定义字母或数字组合
+USER_ID=xxxxxxx123
