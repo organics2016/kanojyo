@@ -22,8 +22,10 @@ class AzureSpeech(Speech):
         subscription=config.conf['SPEECH_KEY'],
         region=config.conf['SPEECH_REGION'])
 
-    speech_config.speech_recognition_language = config.conf[
-        'SPEECH_RECOGNITION_LANGUAGE']
+    ssml_template = xml.dom.minidom.parse('ssml.xml').documentElement
+
+    speech_config.speech_recognition_language = ssml_template.getAttribute(
+        'xml:lang')
 
     audio_input_config = speechsdk.audio.AudioConfig(
         use_default_microphone=True)
@@ -83,8 +85,6 @@ class AzureSpeech(Speech):
                     logging.info(
                         "Did you set the speech resource key and region values?"
                     )
-
-    ssml_template = xml.dom.minidom.parse('ssml.xml').documentElement
 
     def textToSSML(self, text: str) -> str:
         voice = self.ssml_template.getElementsByTagName('voice')[0]
